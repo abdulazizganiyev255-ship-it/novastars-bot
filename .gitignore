@@ -1,0 +1,17 @@
+# Muhim xavfsizlik: Maxfiy kalitlar va sessiya fayllari
+.env
+*.session
+*.session-journal
+session_string.txt
+balans.db*
+
+# Virtual muhit va python kesh
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# Tizim fayllari
+.DS_Store
+Thumbs.db

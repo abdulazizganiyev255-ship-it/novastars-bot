@@ -1,0 +1,9 @@
+services:
+  - type: worker
+    name: novastars-bot
+    runtime: python
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python tolov.py
+    autoDeploy: true
