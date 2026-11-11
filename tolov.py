@@ -712,6 +712,32 @@ def _build_client() -> TelegramClient:
     return TelegramClient(session_target, api_id, api_hash)
 
 
+def _start_health_server():
+    """Render Web Service (Free tier $0) uchun kichik HTTP health check serveri."""
+    port_str = os.getenv("PORT", "").strip()
+    if not port_str:
+        return
+    try:
+        from http.server import HTTPServer, BaseHTTPRequestHandler
+        class HealthCheckHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(b'{"status":"ok","service":"NovaStars Bot"}')
+            def log_message(self, format, *args):
+                pass
+
+        port = int(port_str)
+        server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+        log.info("Render Web Service health server ishga tushdi: port %s (Free $0 rejim)", port)
+        server.serve_forever()
+    except Exception as e:
+        log.warning("Health server xatosi: %s", e)
+
+
+threading.Thread(target=_start_health_server, daemon=True).start()
+
 client = _build_client()
 humo_entity = None
 

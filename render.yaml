@@ -1,5 +1,5 @@
 services:
-  - type: worker
+  - type: web
     name: novastars-bot
     runtime: python
     region: frankfurt
